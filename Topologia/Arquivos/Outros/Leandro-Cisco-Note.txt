@@ -1,0 +1,135 @@
+enable
+configure terminal
+hostname TAT
+interface fastEthernet 0/0
+ip add 172.40.0.1 255.255.0.0
+no shutdown
+description Porta Lan de TAT
+exit
+interface s0/0
+no shutdown
+ip add 50.0.0.1 255.0.0.0
+description Porta wan que liga TAT a VLP
+bandwidth 512
+clock rate 500000
+exit
+router rip
+network 50.0.0.0
+network 172.40.0.0
+end
+copy run star
+
+enable
+configure terminal
+hostname VLP
+interface fastEthernet 0/0
+ip add 172.50.0.1 255.255.0.0
+no shutdown
+description Porta Lan de VLP
+exit
+interface s0/1
+no shutdown
+ip add 50.0.0.2 255.0.0.0
+description Porta Wan que liga VLP a BMC
+bandwidth 256
+clock rate 250000
+exit
+router rip
+network 50.0.0.0
+network 172.50.0.0
+end
+copy run star
+
+enable
+configure terminal
+interface s0/0
+no shutdown
+ip add 50.0.0.1 255.0.0.0
+description Porta wan que liga TAT a VLP
+bandwidth 512
+clock rate 500000
+exit
+router rip
+network 50.0.0.0
+network 172.40.0.0
+end
+copy run star
+
+
+
+
+
+
+
+
+enable
+configure terminal
+hostname BCM
+interface fastEthernet 0/0
+ip add 172.51.0.1 255.255.0.0
+no shutdown
+description Porta Lan de BCM
+exit
+interface s0/1
+no shutdown
+ip add 51.0.0.2 255.0.0.0
+description Porta Wan que liga BMC a VLE
+bandwidth 512
+clock rate 500000
+exit
+router rip
+network 51.0.0.0
+network 172.51.0.0
+end
+copy run star
+
+enable
+configure terminal
+interface s0/0
+no shutdown
+ip add 51.0.0.1 255.0.0.0
+description Porta Wan que liga BMC a VLE
+bandwidth 512
+clock rate 500000
+exit
+router rip
+network 51.0.0.0
+network 172.51.0.0
+end
+copy run star
+
+enable
+configure terminal
+hostname BCM
+interface fastEthernet 0/0
+ip add 172.52.0.1 255.255.0.0
+no shutdown
+description Porta Lan de VLE
+exit
+interface s0/0
+no shutdown
+ip add 52.0.0.2 255.0.0.0
+description Porta Wan que liga VLE a VLG
+bandwidth 512
+clock rate 500000
+exit
+router rip
+network 52.0.0.0
+network 172.52.0.0
+end
+copy run star
+
+enable
+configure terminal
+interface s0/0
+no shutdown
+ip add 52.0.0.1 255.0.0.0
+description Porta Wan que liga BMC a VLE
+bandwidth 512
+clock rate 500000
+exit
+router rip
+network 52.0.0.0
+network 172.52.0.0
+end
+copy run star
